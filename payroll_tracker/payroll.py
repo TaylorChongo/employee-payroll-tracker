@@ -20,6 +20,7 @@ class PayrollRecord:
 def generate_payslip(employee: Employee) -> str:
     """Generate a readable payslip using polymorphic salary calculation."""
     net_salary = employee.calculate_salary()
+    # Reverse the tax calculation to display gross pay from the net result.
     gross_salary = calculate_salary(net_salary / (1 - employee.tax), 0)
     return (
         f"Employee: {employee.name}\n"
@@ -35,9 +36,11 @@ def build_payroll_records(employees: list[Employee]) -> dict[str, PayrollRecord]
     """Build a mapping from employee IDs to payroll records."""
     records: dict[str, PayrollRecord] = {}
     for employee in employees:
+        # IDs are the dictionary keys, so duplicates would silently overwrite data.
         if employee.employee_id in records:
             raise ValueError(f"duplicate employee ID: {employee.employee_id}")
         net_salary = employee.calculate_salary()
+        # Each employee subclass computes net pay differently, but shares this tax model.
         gross_salary = net_salary / (1 - employee.tax)
         records[employee.employee_id] = PayrollRecord(
             employee.employee_id,

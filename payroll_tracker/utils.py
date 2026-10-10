@@ -14,4 +14,5 @@ def apply_tax(gross_salary: float, tax_rate: float) -> float:
         raise ValueError("gross_salary must not be negative")
     if not 0 <= tax_rate <= 1:
         raise ValueError("tax_rate must be between 0 and 1")
+    # A 20% tax leaves 80% of gross pay, represented here as 1 - 0.20.
     return gross_salary * (1 - tax_rate)

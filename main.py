@@ -23,8 +23,10 @@ def main() -> None:
     employee_ids = list(records)
     index = 0
     while index < len(employee_ids):
+        # Use the ID list to look up each record while keeping the loop index explicit.
         record = records[employee_ids[index]]
         print(
+            # Commas and the .2f specifier keep salary output readable and consistent.
             f"{record.employee_id} | {record.employee_name} | "
             f"{record.role} | Net: ${record.net_salary:,.2f}"
         )

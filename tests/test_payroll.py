@@ -6,6 +6,7 @@ from payroll_tracker.utils import apply_tax, calculate_salary
 
 def test_full_time_salary_uses_annual_salary_and_bonus() -> None:
     employee = FullTimeEmployee("E1", "Ada", 72_000, bonus=500, tax=0.2)
+    # approx avoids making the test depend on binary floating-point exactness.
     assert employee.calculate_salary() == pytest.approx(5_200)
 
 
@@ -20,6 +21,7 @@ def test_intern_salary_is_a_monthly_stipend() -> None:
 
 
 def test_properties_reject_invalid_values() -> None:
+    # pytest.raises verifies both validation and the exception type in one context.
     with pytest.raises(ValueError):
         FullTimeEmployee("E1", "Ada", 0)
     with pytest.raises(ValueError):

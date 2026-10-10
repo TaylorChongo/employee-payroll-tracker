@@ -86,6 +86,7 @@ class FullTimeEmployee(Employee):
         return "Full-time"
 
     def calculate_salary(self) -> float:
+        # Annual salary is converted to a monthly amount before the bonus is added.
         monthly_gross = self.salary / 12 + self.bonus
         return apply_tax(monthly_gross, self.tax)
 
@@ -112,6 +113,7 @@ class ContractEmployee(Employee):
         return "Contract"
 
     def calculate_salary(self) -> float:
+        # Contractors use salary as an hourly rate, so hours determine gross pay.
         monthly_gross = self.salary * self.hours_worked + self.bonus
         return apply_tax(monthly_gross, self.tax)
 
@@ -124,4 +126,5 @@ class Intern(Employee):
         return "Intern"
 
     def calculate_salary(self) -> float:
+        # Unlike the other employee types, an intern's salary is already monthly.
         return apply_tax(self.salary + self.bonus, self.tax)
